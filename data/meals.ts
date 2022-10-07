@@ -1,0 +1,51 @@
+export const meals = [
+  {
+    title: "TWISTER CHILLA BOX",
+    price: "49.9",
+    img: "https://images.pexels.com/photos/2282528/pexels-photo-2282528.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=800",
+    rate: 3,
+    desc: "3 Twister sandwiches + 6 pcs of chicken + family fries + 1L Drink",
+  },
+  {
+    title: "TWISTER CHILLA BOX",
+    price: "49.9",
+    img: "https://images.pexels.com/photos/2282528/pexels-photo-2282528.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=800",
+    rate: 4.5,
+    desc: "3 Twister sandwiches + 6 pcs of chicken + family fries + 1L Drink",
+  },
+  {
+    title: "TWISTER CHILLA BOX",
+    price: "49.9",
+    img: "https://images.pexels.com/photos/2282528/pexels-photo-2282528.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=800",
+    rate: 4.5,
+    desc: "3 Twister sandwiches + 6 pcs of chicken + family fries + 1L Drink",
+  },
+  {
+    title: "TWISTER CHILLA BOX",
+    price: "49.9",
+    img: "https://images.pexels.com/photos/2282528/pexels-photo-2282528.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=800",
+    rate: 4.5,
+    desc: "3 Twister sandwiches + 6 pcs of chicken + family fries + 1L Drink",
+  },
+  {
+    title: "TWISTER CHILLA BOX",
+    price: "49.9",
+    img: "https://images.pexels.com/photos/2282528/pexels-photo-2282528.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=800",
+    rate: 4,
+    desc: "3 Twister sandwiches + 6 pcs of chicken + family fries + 1L Drink",
+  },
+  {
+    title: "TWISTER CHILLA BOX",
+    price: "49.9",
+    img: "https://images.pexels.com/photos/2282528/pexels-photo-2282528.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=800",
+    rate: 3,
+    desc: "3 Twister sandwiches + 6 pcs of chicken + family fries + 1L Drink",
+  },
+  {
+    title: "TWISTER CHILLA BOX",
+    price: "49.9",
+    img: "https://images.pexels.com/photos/2282528/pexels-photo-2282528.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=800",
+    rate: 4.5,
+    desc: "3 Twister sandwiches + 6 pcs of chicken + family fries + 1L Drink",
+  },
+];
