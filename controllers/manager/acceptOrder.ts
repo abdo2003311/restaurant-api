@@ -1,14 +1,14 @@
 import { DeliveryEmployee, Order } from "../../models";
-import authManager from "./authManager";
+import isManager from "./isManager";
 
 let acceptOrder = async (
   data: { token: any; deliveryEmployee: any; order: any },
   socket: any
 ) => {
   let { token, deliveryEmployee, order } = data;
-  let isManager = await authManager(token);
+  let CheckisManager = await isManager(token);
 
-  if (!isManager) {
+  if (!CheckisManager) {
     socket.emit("acceptedOrder", { error: "un Auth" });
     return;
   }

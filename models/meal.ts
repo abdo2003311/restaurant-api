@@ -4,7 +4,7 @@ let mealSchema = new Schema({
   title: {
     required: true,
     type: String,
-    minlength: 7,
+    minlength: 5,
   },
   desc: { required: true, type: String, minlength: 7, maxlength: 150 },
   price: {
@@ -17,13 +17,24 @@ let mealSchema = new Schema({
     type: String,
   },
   rate: {
-    default : 0,
+    default: 0,
     type: Number,
     min: 0,
     max: 5,
   },
+  sold: {
+    default: 0,
+    type: Number,
+    min: 0,
+  },
+  createdAt: String,
 });
 
+mealSchema.pre('save', async function name(next) {
+  let d = new Date();
+  this.createdAt = `${d.toTimeString().slice(0,7)}T${d.getDate()}/${d.getMonth()}/${d.getFullYear()}`;
+  next();
+});
 let Meal = model("Meal", mealSchema);
 
 export default Meal;

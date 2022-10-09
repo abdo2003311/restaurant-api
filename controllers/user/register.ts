@@ -12,11 +12,9 @@ let register = async (req: Request, res: Response) => {
       email: email,
       cart: cart._id,
     })) as any;
-    console.log(user);
     let token = user.createJWT();
     res.status(StatusCodes.CREATED).send({ token });
   } catch (e: any) {
-    console.log(e);
     res.status(500).send(e);
   }
 };

@@ -1,6 +1,8 @@
-import { Request, Response, NextFunction } from "express";
+import { NextFunction } from "express";
+import { Response, Request } from "express";
 import { verify } from "jsonwebtoken";
-let authManager = async (req: Request, res: Response, next: NextFunction) => {
+
+let authAdmin = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const authHeader = req.headers.authorization;
     if (!authHeader || !authHeader.startsWith("Bearer ")) {
@@ -8,18 +10,18 @@ let authManager = async (req: Request, res: Response, next: NextFunction) => {
     }
     const token = authHeader?.split(" ")[1];
     if (token)
-      return verify(
+      verify(
         token,
         process.env.API_SECRET as string,
         async (err: any, decoded: any) => {
-          if (decoded.username === "manager" && decoded.password === "manager")
-          next()
-          else return res.status(403).send('unAuth');
+          if (decoded.username === "admin" && decoded.password === "admin")
+            next();
+          else res.status(403).send("unAuth");
         }
       );
   } catch (e) {
-    return false;
+    res.status(403).send("unAuth");
   }
 };
 
-export default authManager;
+export default authAdmin;

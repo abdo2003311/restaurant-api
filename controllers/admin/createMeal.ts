@@ -7,7 +7,7 @@ let createMeal = async (req: Request, res: Response) => {
     let newMeal = await Meal.create(meal)
     res.status(200).send(newMeal);
   } catch (e) {
-    res.status(200).send("error");
+    res.status(403).send(e);
   }
 };
 

@@ -6,11 +6,15 @@ let updateMeal = async (req: Request, res: Response) => {
     let { id } = req.params;
     let { newMeal } = req.body;
     let meal = await Meal.findById(id);
-    meal = newMeal;
+    if (meal) {
+      meal.desc = newMeal.desc;
+      meal.title = newMeal.title;
+      meal.price = newMeal.price;
+    }
     await meal?.save();
-    res.status(200).send("success");
+    res.status(200).send(meal);
   } catch (e) {
-    res.status(200).send("error");
+    res.status(403).send(e);
   }
 };
 

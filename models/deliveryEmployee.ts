@@ -29,9 +29,12 @@ let deliveryEmployeeSchema = new Schema({
       ref: "Order",
     },
   ],
+  createdAt: String,
 });
 
 deliveryEmployeeSchema.pre("save", async function name(next) {
+  let d = new Date();
+  this.createdAt = `${d.toTimeString().slice(0,7)}T${d.getDate()}/${d.getMonth()}/${d.getFullYear()}`;
   const salt = await genSalt(10);
   this.password = await hash(this.password, salt);
   next();

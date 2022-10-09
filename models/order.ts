@@ -23,8 +23,14 @@ let orderSchema = new Schema({
   notes: String,
   location: String,
   status: String,
+  createdAt: String,
 });
 
+orderSchema.pre('save', async function name(next) {
+  let d = new Date();
+  this.createdAt = `${d.toTimeString().slice(0,7)}T${d.getDate()}/${d.getMonth()}/${d.getFullYear()}`;
+  next();
+});
 let Order = model("Order", orderSchema);
 
 export default Order;

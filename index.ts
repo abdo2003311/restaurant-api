@@ -12,6 +12,7 @@ import compression from "compression";
 import helmet from "helmet";
 import morgan from "morgan";
 import {
+  adminRouter,
   employeeRouter,
   managerRouter,
   mealsRouter,
@@ -19,7 +20,7 @@ import {
   usersRouter,
 } from "./routers";
 import { User, Meal, Cart, DeliveryEmployee, Order } from "./models";
-import { acceptOrder, joinMyRoom } from "./controllers";
+import { acceptOrder, completeOrder, joinMyRoom } from "./controllers";
 require("dotenv").config();
 
 const app = express();
@@ -88,35 +89,10 @@ io.on("connection", (socket) => {
   socket.on("makeOrder", (data) => {
     socket.broadcast.emit("madeOrder", data.data);
   });
-  socket.on("completedOrder", async ({ order, token }) => {
-    verify(
-      token,
-      process.env.API_SECRET as string,
-      async (err: any, decoded: any) => {
-        if (!err) {
-          if (decoded?.deliveryEmployeeId) {
-            let employee = await DeliveryEmployee.findById(
-              decoded.deliveryEmployeeId
-            ).populate(["unCompletedOrders", "completedOrders"]);
-            let updatedOrder = await Order.findById(order._id);
-            if (updatedOrder && employee) {
-              updatedOrder.status = "completed";
-              await updatedOrder.save();
-              employee.unCompletedOrders = employee.unCompletedOrders.filter(
-                (item: any) => item._id.valueOf() != order._id
-              );
-              employee.completedOrders.push(updatedOrder._id as any);
-              await employee.save();
-              socket.broadcast.emit("completedOrder", updatedOrder);
-              socket.broadcast
-                .to(`id${order.userId}`)
-                .emit("updateOrder", updatedOrder);
-            }
-          }
-        }
-      }
-    );
-  });
+  socket.on(
+    "completedOrder",
+    async ({ token, order }) => await completeOrder({ token, order, socket })
+  );
 });
 httpServer.listen(PORT, () => console.log(`app listening on port ${PORT}`));
 
@@ -125,3 +101,4 @@ app.use("/api/orders", ordersRouter);
 app.use("/api/users", usersRouter);
 app.use("/api/manager", managerRouter);
 app.use("/api/delivery", employeeRouter);
+app.use("/api/admin", adminRouter);

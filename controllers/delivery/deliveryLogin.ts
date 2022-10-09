@@ -3,7 +3,7 @@ import { Request } from "express";
 import { DeliveryEmployee } from "../../models";
 let deliveryLogin = async (req: Request, res: Response) => {
   const { username, password } = req.body;
-
+  console.log(password)
   if (!username || !password) {
     return res.status(400).send("err");
   }

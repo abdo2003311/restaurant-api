@@ -1,5 +1,5 @@
 import { Response, Request } from "express";
-import { Order, User } from "../../models";
+import { Meal, Order, User } from "../../models";
 
 let makeOrder = async (req: Request, res: Response) => {
   try {
@@ -14,6 +14,11 @@ let makeOrder = async (req: Request, res: Response) => {
         return res.status(403).send("too many Un Completed Orders");
       }
 
+      for (let i = 0; i < (user?.cart as any).meals.length; i++) {
+        let meal = await Meal.findById((user?.cart as any).meals[i]._id);
+        if (meal) meal.sold += (user?.cart as any).meals[i].quantity;
+        await meal?.save();
+      }
       let order = await Order.create({
         userId: user._id,
         meals: (user?.cart as any).meals,
