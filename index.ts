@@ -36,38 +36,45 @@ app.use(helmet());
 app.use(compression());
 app.use(morgan("tiny"));
 
-mongoose.connect(
-  DATABASE,
-  { useUnifiedTopology: true, useNewUrlParser: true, autoIndex: true } as any,
-  () => console.log("connected to db")
-);
+let connectingToDb = async () => {
+  await mongoose.connect(
+    DATABASE,
+    {
+      useUnifiedTopology: true,
+      useNewUrlParser: true,
+      autoIndex: true,
+    } as any,
+    () => console.log("connected to db")
+  );
 
-let creatingDb = async () => {
-  await Meal.deleteMany();
-  await User.deleteMany();
-  await DeliveryEmployee.deleteMany();
-  await Order.deleteMany();
-  await Cart.deleteMany();
-  meals.forEach(async (meal) => {
-    await Meal.create(meal);
-  });
-  users.forEach(async (user) => {
-    let cart = await Cart.create({ meals: [] });
-    await User.create({
-      username: user.username,
-      password: user.password,
-      email: user.email,
-      cart: cart._id,
+  setTimeout(async () => {
+    await Meal.deleteMany();
+    await User.deleteMany();
+    await DeliveryEmployee.deleteMany();
+    await Order.deleteMany();
+    await Cart.deleteMany();
+    meals.forEach(async (meal) => {
+      await Meal.create(meal);
     });
-  });
-  deliveryEmployees.forEach(async (deliveryEmployee) => {
-    await DeliveryEmployee.create({
-      username: deliveryEmployee.username,
-      password: deliveryEmployee.password,
+    users.forEach(async (user) => {
+      let cart = await Cart.create({ meals: [] });
+      await User.create({
+        username: user.username,
+        password: user.password,
+        email: user.email,
+        cart: cart._id,
+      });
     });
-  });
+    deliveryEmployees.forEach(async (deliveryEmployee) => {
+      await DeliveryEmployee.create({
+        username: deliveryEmployee.username,
+        password: deliveryEmployee.password,
+      });
+    });
+  }, 7000);
 };
-creatingDb();
+
+connectingToDb();
 
 const io = new Server(httpServer, {
   cors: {
