@@ -78,7 +78,7 @@ connectingToDb();
 
 const io = new Server(httpServer, {
   cors: {
-    origin: "http://localhost:3000",
+    origin: "https://react-restaurant.onrender.com",
     credentials: true,
   },
   allowEIO3: true,
